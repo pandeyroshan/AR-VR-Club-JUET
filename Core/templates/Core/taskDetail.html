@@ -1,0 +1,26 @@
+{% extends 'Core/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h3 class="text-success mt-3 ml-3 font-weight-light mb-5">{{data.taskCode}}</h3>
+    <h2 class="text-info text-center font-weight-light mb-3">{{data.taskHeading}}</h2>
+    <div class="text-center mb-5">
+        <p>{{data.taskContent|linebreaksbr}}</p>
+    </div>
+    <h4><footer class="blockquote-footer text-success text-right font-weight-light mr-5 pb-5"><strong class="text-success">{{ data.user }}</strong> on <cite title="Source Title text-secondary">{{ data.startDate|date:"M d, Y" }}</cite></footer></h4>
+
+    {%if userData.status == 'Pending'%}
+        <h4 class="text-info ml-3 font-weight-light pb-5"> Status: <span class="text-danger">{{userData.status}}</span></h4>
+    {%else%}
+        <h4 class="text-info ml-3 font-weight-light pb-5"> Status: <span class="text-success">{{userData.status}}</span></h4>
+    {%endif%}
+    {%if userData.status == 'Pending'%}
+    <form method='POST' class="ml-3">
+        {% csrf_token %}
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="COMPLETE">
+            <label class="form-check-label" for="inlineRadio2">Completed</label>
+          </div>
+        <button type="submit" class="btn btn-success">Update status</button>
+    </form>
+    {%endif%}
+{% endblock content %}

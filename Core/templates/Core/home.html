@@ -1,0 +1,25 @@
+{% extends 'Core/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {%if user.is_authenticated%}
+        <h3 class="text-success mt-5 ml-3 font-weight-light"></h3>
+        <section class="section">
+            <div class="container hero-body">
+                {% for data in dataset %}
+                <article class="media content-section">
+                    <div class="media-body">
+                        <blockquote class="blockquote text-right">
+                                <p class="mb-0 text-primary text-left">{{ data.taskHeading }} - <span class="font-weight-light"><a href="{% url 'taskDetail' data.id%}">{{data.taskCode}}</a></span></p>
+                                <footer class="blockquote-footer text-success"><strong class="text-success">{{ data.user }}</strong> on <cite title="Source Title text-secondary">{{ data.startDate|date:"M d, Y" }}</cite></footer>
+                        </blockquote>
+                      <p class="article-content font-weight-light">{{ data.taskContent|linebreaksbr }}</p>
+                    </div>
+                </article>
+                <hr>
+                {% endfor %}
+            </div>
+        </section>
+    {%else%}
+        <h2 class="text-danger mt-5 font-weight-light text-center">Authorized Access Only</h2>
+    {%endif%}
+{% endblock content %}
